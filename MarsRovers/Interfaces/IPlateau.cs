@@ -9,7 +9,7 @@ namespace MarsRovers.Interfaces
     interface IPlateau
     {
         RoverPosition MaxPosition { get; }
-        List<IRover> Rovers { get; }
+        IEnumerable<IRover> Rovers { get; }
 
         Boolean ValidatePosition(RoverPosition roverPosition);
     }

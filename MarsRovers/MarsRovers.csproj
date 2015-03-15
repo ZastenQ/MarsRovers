@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\Plateau.cs" />
+    <Compile Include="Concrete\Rover.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Interfaces\IPlateau.cs" />
     <Compile Include="Interfaces\IRover.cs" />
