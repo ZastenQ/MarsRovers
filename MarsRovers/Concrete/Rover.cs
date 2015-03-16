@@ -9,17 +9,18 @@ namespace MarsRovers.Concrete
 {
     public class Rover : IRover
     {
-        public Rover(RoverPosition position, Direction direction)
+        public Rover(RoverPosition position, Direction direction, IPlateau currentPlateau)
         {
             Position = position;
             Direction = direction;
+            CurrentPlateau = currentPlateau;
         }
 
         public RoverPosition Position { get; private set; }
 
         public Direction Direction { get; private set; }
 
-
+        private IPlateau CurrentPlateau { get; set; }
 
         public void RotateRight()
         {
@@ -50,6 +51,10 @@ namespace MarsRovers.Concrete
                     break;
             }
 
+            if (CurrentPlateau.ValidatePosition(newPosition))
+            {
+                Position = newPosition;
+            }
         }
     }
 }

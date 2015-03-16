@@ -17,7 +17,7 @@ namespace MarsRovers.Concrete
 
         public RoverPosition MaxPosition { get; private set; }
 
-        public IEnumerable<IRover> Rovers { get; private set; }
+        private List<IRover> Rovers { get; set; }
 
         public bool ValidatePosition(RoverPosition roverPosition)
         {
@@ -27,9 +27,49 @@ namespace MarsRovers.Concrete
                     roverPosition.Y > MaxPosition.Y);
         }
 
-        public void AddRover(IRover rover)
+        public void Add(IRover item)
         {
-            ((List<IRover>)Rovers).Add(rover);
+            Rovers.Add(item);
+        }
+
+        public void Clear()
+        {
+            Rovers.Clear();
+        }
+
+        public bool Contains(IRover item)
+        {
+            return Rovers.Contains(item);
+        }
+
+        public void CopyTo(IRover[] array, int arrayIndex)
+        {
+            Rovers.CopyTo(array, arrayIndex);
+        }
+
+        public int Count
+        {
+            get { return Rovers.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        public bool Remove(IRover item)
+        {
+            return Rovers.Remove(item);
+        }
+
+        public IEnumerator<IRover> GetEnumerator()
+        {
+            return Rovers.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return Rovers.GetEnumerator();
         }
     }
 }

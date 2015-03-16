@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace MarsRovers.Interfaces
 {
-    interface IPlateau
+    public interface IPlateau: ICollection<IRover>
     {
         RoverPosition MaxPosition { get; }
-        IEnumerable<IRover> Rovers { get; }
 
         Boolean ValidatePosition(RoverPosition roverPosition);
     }
