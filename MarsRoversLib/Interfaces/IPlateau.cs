@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarsRovers.Interfaces
+namespace MarsRoversLib.Interfaces
 {
     public interface IPlateau: ICollection<IRover>
     {

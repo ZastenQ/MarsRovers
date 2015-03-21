@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRovers", "MarsRovers\MarsRovers.csproj", "{6E0699E6-B61C-4113-9803-74D68E38F539}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRoversLib", "MarsRoversLib\MarsRoversLib.csproj", "{61CDBBC6-D353-4581-803A-4C24432B7845}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsRoversGL", "MarsRoversGL\MarsRoversGL.csproj", "{8A8D9325-22E8-414B-941C-7405BD931E12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{6E0699E6-B61C-4113-9803-74D68E38F539}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E0699E6-B61C-4113-9803-74D68E38F539}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E0699E6-B61C-4113-9803-74D68E38F539}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61CDBBC6-D353-4581-803A-4C24432B7845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61CDBBC6-D353-4581-803A-4C24432B7845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61CDBBC6-D353-4581-803A-4C24432B7845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61CDBBC6-D353-4581-803A-4C24432B7845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8D9325-22E8-414B-941C-7405BD931E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8D9325-22E8-414B-941C-7405BD931E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8D9325-22E8-414B-941C-7405BD931E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8D9325-22E8-414B-941C-7405BD931E12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

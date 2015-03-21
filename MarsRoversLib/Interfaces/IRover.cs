@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarsRovers.Interfaces
+namespace MarsRoversLib.Interfaces
 {
     public interface IRover
     {
         RoverPosition Position { get; }
         Direction Direction { get; }
-
+        
         void RotateRight();
         void RotateLeft();
-        void MoveForward();
+        Boolean MoveForward();
+
+        void AutoMove();
     }
 }

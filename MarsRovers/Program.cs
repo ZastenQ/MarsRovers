@@ -1,5 +1,6 @@
-﻿using MarsRovers.Concrete;
-using MarsRovers.Interfaces;
+﻿using MarsRoversLib.Concrete;
+using MarsRoversLib.Interfaces;
+using MarsRoversLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,8 @@ namespace MarsRovers
     {
         static void Main(string[] args)
         {
-            List<String> input = new List<string>();
+            List<String> input = new List<String>();
             RoverPosition maxPosition;
-
 
             for (Int32 i = 0; i < 5; i++)
             {

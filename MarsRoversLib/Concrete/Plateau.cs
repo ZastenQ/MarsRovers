@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MarsRovers.Interfaces;
+using MarsRoversLib.Interfaces;
 
-namespace MarsRovers.Concrete
+namespace MarsRoversLib.Concrete
 {
-    class Plateau : IPlateau
+    public class Plateau : IPlateau
     {
         public Plateau(RoverPosition maxPosition)
         {
