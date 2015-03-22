@@ -27,7 +27,7 @@ namespace MarsRoversGL
             maxPosition.X = 10;
             maxPosition.Y = 10;
 
-            obstacles.AddRange(Enumerable.Range(0, maxPosition.X)
+            obstacles.AddRange(Enumerable.Range(0, maxPosition.X*2)
                                          .Select(m => new RoverPosition()
                                 {
                                     X = Randomizer.Next(0, maxPosition.X),
@@ -38,20 +38,13 @@ namespace MarsRoversGL
             FreeFormPlateau plateau = new FreeFormPlateau(maxPosition, obstacles);
 
             plateau.Add(new Rover(new RoverPosition(), Direction.E, plateau));
+         //   plateau.Add(new Rover(new RoverPosition(), Direction.N, plateau));
+            plateau.Add(new HunterRover(new RoverPosition() { X = 5, Y = 5 }, Direction.N, plateau)
+            {
+                Target = new RoverPosition() { X = 7, Y = 9 }
+            });
 
-            //List<Vector> PointsDirection = new List<Vector>();
-            //List<Color> PointsColor = new List<Color>();
-
-            //for (Int32 i = 0; i < 200; i++)
-            //{
-            //    DataPoints.Add(new Vector(Randomizer.NextDouble(), Randomizer.NextDouble()));
-            //    PointsDirection.Add(new Vector(Randomizer.NextDouble() * (Randomizer.Next(10) > 5 ? -1 : 1),
-            //                                   Randomizer.NextDouble() * (Randomizer.Next(10) > 5 ? -1 : 1)));
-            //    PointsColor.Add(Color.FromArgb(200 + (byte)Randomizer.Next(35), 200 + (byte)Randomizer.Next(35), 200 + (byte)Randomizer.Next(35)));
-            //    Double s = Math.Sqrt(0.0000001 / PointsDirection.Last().SquaredLength);
-            //    PointsDirection.Last().Multiply(s);
-            //}
-
+            
             using (GameWindow game = new GameWindow(800, 800))
             {
                 game.Load += (sender, e) =>
@@ -94,36 +87,17 @@ namespace MarsRoversGL
                     {
                         DrawRover(0.2f, rover.Position.X + 0.5f, rover.Position.Y + 0.5f, Color.Red);
                         rover.AutoMove();
+                        DrawTrace(rover.RoverTrace);
                     }
 
-
-                    //VoronoiGraph vorGraph = Fortune.ComputeVoronoiGraph(DataPoints);
-                    //DrawPolyEdges(vorGraph, DataPoints, PointsColor);
-                    //DrawPoints(DataPoints);
-                    //DrawEdges(vorGraph);
                     game.SwapBuffers();
-                    System.Threading.Thread.Sleep(200);
-                    //for (Int32 j = 0; j < DataPoints.Count; j++)
-                    //{
-                    //    DataPoints[j][0] += PointsDirection[j][0];
-                    //    DataPoints[j][1] += PointsDirection[j][1];
-                    //}
+                    System.Threading.Thread.Sleep(500);
                 };
 
                 // Run the game at 60 updates per second
-                game.Run(60);
+                game.Run(60.0);
             }
         }
-
-        //static void DrawPoints(List<Vector> dataPoints)
-        //{
-        //    Color pointColor = Color.Black;
-
-        //    foreach (Vector v in dataPoints)
-        //    {
-        //        DrawCircle(0.0025f, (float)v[0], (float)v[1], pointColor);
-        //    }
-        //}
 
         static void DrawRover(float radius, float pX, float pY, Color color)
         {
@@ -166,46 +140,14 @@ namespace MarsRoversGL
 
             GL.End();
         }
-        //static void DrawPolyEdges(VoronoiGraph vorGraph, List<Vector> dataPoints, List<Color> pointsColor)
-        //{
-        //    for (Int32 i = 0; i < dataPoints.Count; i++)
-        //    {
-        //        Vector point = dataPoints[i];
-        //        List<VoronoiEdge> pointEdges = vorGraph.Edges.Where(x => x.LeftData == point || x.RightData == point).ToList();
 
-        //        GL.Begin(PrimitiveType.Polygon);
-        //        //  GL.Color3((byte)Randomizer.Next(255), (byte)Randomizer.Next(255), (byte)Randomizer.Next(255));
-        //        GL.Color3(pointsColor[i]);
-
-        //        //  if (pointEdges.Any(x => x.VVertexA == Fortune.VVInfinite || x.VVertexA == Fortune.VVUnkown ||
-        //        //     x.VVertexB == Fortune.VVInfinite || x.VVertexB == Fortune.VVUnkown)) continue;
-
-        //        foreach (VoronoiEdge ve in pointEdges)
-        //        {
-        //            if (Double.IsInfinity(ve.VVertexA[0]))
-        //            {
-        //                Double s = Math.Sqrt(2 / ve.DirectionVector.SquaredLength);
-        //                ve.DirectionVector.Multiply(s);
-        //                GL.Vertex2(ve.DirectionVector[0] + ve.VVertexB[0], ve.VVertexB[1] + ve.DirectionVector[1]);
-        //                GL.Vertex2(ve.VVertexB[0], ve.VVertexB[1]);
-        //            }
-        //            else if (Double.IsInfinity(ve.VVertexB[0]))
-        //            {
-        //                Double s = Math.Sqrt(2 / ve.DirectionVector.SquaredLength);
-        //                ve.DirectionVector.Multiply(s);
-        //                GL.Vertex2(ve.VVertexA[0], ve.VVertexA[1]);
-        //                GL.Vertex2(ve.DirectionVector[0] + ve.VVertexA[0], ve.VVertexA[1] + ve.DirectionVector[1]);
-        //            }
-        //            else
-        //            {
-        //                GL.Vertex2(ve.VVertexA[0], ve.VVertexA[1]);
-        //                GL.Vertex2(ve.VVertexB[0], ve.VVertexB[1]);
-        //            }
-        //        }
-
-        //        GL.End();
-        //    }
-        //}
-
+        static void DrawTrace(IEnumerable<RoverPosition> trace)
+        {
+            for (Int32 i = 0; i < trace.Count(); i++)
+            {
+                Color traceColor = Color.FromArgb(0, 255, 255 - ((int)(255 / trace.Count()) * i), 255 - ((int)(255 / trace.Count()) * i));
+                DrawRover(0.05f, trace.ToList()[i].X + 0.5f, trace.ToList()[i].Y + 0.5f, traceColor);
+            }
+        }
     }
 }

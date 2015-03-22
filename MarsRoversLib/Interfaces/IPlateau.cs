@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace MarsRoversLib.Interfaces
 {
-    public interface IPlateau: ICollection<IRover>
+    public interface IPlateau : ICollection<IRover>
     {
         RoverPosition MaxPosition { get; }
+
+        Boolean ValidateMoving(RoverPosition roverPosition);
 
         Boolean ValidatePosition(RoverPosition roverPosition);
     }

@@ -7,29 +7,34 @@ using MarsRoversLib.Interfaces;
 
 namespace MarsRoversLib.Concrete
 {
-    public class Plateau : IPlateau
+    public class FreeFormPlateau: IPlateau
     {
-        public Plateau(RoverPosition maxPosition)
+        public FreeFormPlateau(RoverPosition maxPosition, IEnumerable<RoverPosition> obstacles)
         {
             MaxPosition = maxPosition;
             this.Rovers = new List<IRover>();
+            this.Obstacles = obstacles;
         }
 
         public RoverPosition MaxPosition { get; private set; }
 
         private List<IRover> Rovers { get; set; }
 
-        public bool ValidatePosition(RoverPosition roverPosition)
+        public IEnumerable<RoverPosition> Obstacles { get; private set; }
+
+        public Boolean ValidatePosition(RoverPosition roverPosition)
         {
             return !(roverPosition.X < 0 ||
                     roverPosition.Y < 0 ||
-                    roverPosition.X > MaxPosition.X ||
-                    roverPosition.Y > MaxPosition.Y);
+                    roverPosition.X >= MaxPosition.X ||
+                    roverPosition.Y >= MaxPosition.Y||
+                    Obstacles.Contains(roverPosition) );
         }
 
         public Boolean ValidateMoving(RoverPosition roverPosition)
-        { 
-            return ValidatePosition(roverPosition);
+        {
+            return ValidatePosition(roverPosition) &&
+                   !(this.Rovers.Any(ro => ro.Position.X == roverPosition.X && ro.Position.Y == roverPosition.Y));
         }
 
         public void Add(IRover item)
