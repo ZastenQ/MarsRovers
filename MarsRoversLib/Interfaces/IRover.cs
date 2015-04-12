@@ -10,11 +10,13 @@ namespace MarsRoversLib.Interfaces
     {
         RoverPosition Position { get; }
         Direction Direction { get; }
+        Boolean IsKilled { get; }
         
         void RotateRight();
         void RotateLeft();
         Boolean MoveForward();
 
         void AutoMove();
+        void Kill();
     }
 }

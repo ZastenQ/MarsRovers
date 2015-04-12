@@ -24,10 +24,10 @@ namespace MarsRoversGL
         {
             List<RoverPosition> obstacles = new List<RoverPosition>();
             RoverPosition maxPosition;
-            maxPosition.X = 10;
-            maxPosition.Y = 10;
+            maxPosition.X = 20;
+            maxPosition.Y = 20;
 
-            obstacles.AddRange(Enumerable.Range(0, maxPosition.X*2)
+            obstacles.AddRange(Enumerable.Range(0, maxPosition.X * 2)
                                          .Select(m => new RoverPosition()
                                 {
                                     X = Randomizer.Next(0, maxPosition.X),
@@ -38,13 +38,10 @@ namespace MarsRoversGL
             FreeFormPlateau plateau = new FreeFormPlateau(maxPosition, obstacles);
 
             plateau.Add(new Rover(new RoverPosition(), Direction.E, plateau));
-         //   plateau.Add(new Rover(new RoverPosition(), Direction.N, plateau));
-            plateau.Add(new HunterRover(new RoverPosition() { X = 5, Y = 5 }, Direction.N, plateau)
-            {
-                Target = new RoverPosition() { X = 7, Y = 9 }
-            });
+            plateau.Add(new Rover(new RoverPosition(), Direction.E, plateau));
+            //   plateau.Add(new Rover(new RoverPosition(), Direction.N, plateau));
+            plateau.Add(new HunterRover(new RoverPosition() { X = 7, Y = 8 }, Direction.N, plateau));
 
-            
             using (GameWindow game = new GameWindow(800, 800))
             {
                 game.Load += (sender, e) =>
@@ -85,9 +82,16 @@ namespace MarsRoversGL
 
                     foreach (Rover rover in plateau)
                     {
-                        DrawRover(0.2f, rover.Position.X + 0.5f, rover.Position.Y + 0.5f, Color.Red);
-                        rover.AutoMove();
-                        DrawTrace(rover.RoverTrace);
+                        if (rover.IsKilled == false)
+                        {
+                            DrawRover(0.2f, rover.Position.X + 0.5f, rover.Position.Y + 0.5f, Color.Red);
+                            DrawTrace(rover.RoverTrace);
+                            rover.AutoMove();
+                        }
+                        else
+                        {
+                            DrawRover(0.2f, rover.Position.X + 0.5f, rover.Position.Y + 0.5f, Color.Blue);
+                        }
                     }
 
                     game.SwapBuffers();

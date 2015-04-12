@@ -30,15 +30,39 @@ namespace MarsRoversLib.Concrete
                 .ToList();
         }
 
-        public RoverPosition Target { get; set; }
+        public IRover Target { get; private set; }
 
         private IEnumerable<DijkstraAlgorithm.Path<RoverPosition>> Graph { get; set; }
 
         public override void AutoMove()
         {
-            if (!(Position.X == Target.X && Position.Y == Target.Y))
+            if (Target != null)
             {
-                LinkedList<DijkstraAlgorithm.Path<RoverPosition>> res = DijkstraAlgorithm.Engine.CalculateShortestPathBetween(Position, Target, Graph);
+                HunterAutoMove();
+                HunterAutoMove();
+            }
+            else
+            {
+                HunterAutoMove();
+                HunterAutoMove();
+            }
+        }
+
+        private void HunterAutoMove()
+        {
+            if (Target == null)
+            {
+                Target = CurrentPlateau.FirstOrDefault(x => x != this && !x.IsKilled);
+                if (Target == null)
+                {
+                    base.AutoMove();
+                    return;
+                }
+            }
+
+            if (!(Position.X == Target.Position.X && Position.Y == Target.Position.Y))
+            {
+                LinkedList<DijkstraAlgorithm.Path<RoverPosition>> res = DijkstraAlgorithm.Engine.CalculateShortestPathBetween(Position, Target.Position, Graph);
 
                 if (res.Any())
                 {
@@ -47,15 +71,15 @@ namespace MarsRoversLib.Concrete
                 else
                 {
                     base.AutoMove();
-                    Target = Position;
+
                 }
             }
             else
             {
+                Target.Kill();
+                Target = null;
                 base.AutoMove();
-                Target = Position;
             }
-
         }
     }
 }

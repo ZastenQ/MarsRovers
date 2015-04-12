@@ -14,6 +14,7 @@ namespace MarsRoversLib.Concrete
             Position = position;
             Direction = direction;
             CurrentPlateau = currentPlateau;
+            IsKilled = false; // default value on creation == false or null
             Priority = new Dictionary<RoverPosition, int>() { { position, 1 } };
             RoverTrace = new Queue<RoverPosition>();
         }
@@ -22,7 +23,9 @@ namespace MarsRoversLib.Concrete
 
         public Direction Direction { get; protected set; }
 
-        private IPlateau CurrentPlateau { get; set; }
+        public Boolean IsKilled { get; protected set; }
+
+        protected IPlateau CurrentPlateau { get; set; }
 
         private Dictionary<RoverPosition, Int32> Priority { get; set; }
 
@@ -47,6 +50,11 @@ namespace MarsRoversLib.Concrete
                     break;
             }
             return newPosition;
+        }
+
+        public void Kill()
+        {
+            this.IsKilled = true;
         }
 
         public void RotateRight()
@@ -94,16 +102,18 @@ namespace MarsRoversLib.Concrete
             // сортируем по приоритету
             // сортируем по направлению; текущее направление - приоритетно!
             // отбираем только направления
+            if (this.IsKilled == false)
+            {
+                this.Direction = (new List<Direction>() { Direction.E, Direction.S, Direction.W, Direction.N })
+                    .Select(dir => new KeyValuePair<Direction, RoverPosition>(dir, GetNewPosition(this.Position, dir)))
+                    .Where(dir => CurrentPlateau.ValidateMoving(dir.Value))
+                    .OrderBy(dir => Priority.ContainsKey(dir.Value) ? Priority[dir.Value] : 0)
+                    .ThenBy(dir => dir.Key == Direction ? 0 : 1)
+                    .Select(dir => dir.Key)
+                    .First();
 
-            this.Direction = (new List<Direction>() { Direction.E, Direction.S, Direction.W, Direction.N })
-                .Select(dir => new KeyValuePair<Direction, RoverPosition>(dir, GetNewPosition(this.Position, dir)))
-                .Where(dir => CurrentPlateau.ValidateMoving(dir.Value))
-                .OrderBy(dir => Priority.ContainsKey(dir.Value) ? Priority[dir.Value] : 0)
-                .ThenBy(dir => dir.Key == Direction ? 0 : 1)
-                .Select(dir => dir.Key)
-                .First();
-
-            MoveForward();
+                MoveForward();
+            }
         }
     }
 }
